@@ -1,0 +1,54 @@
+version: '3.6'
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: "monitor_prometheus"
+    volumes:
+      - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+    expose:
+      - 9090
+    restart: always
+    networks:
+      - planet-link
+    logging:
+      driver: "json-file"
+      options:
+        max-file: '4'
+        max-size: '250m'
+
+  grafana:
+    image: grafana/grafana
+    container_name: "monitor_grafana"
+    expose:
+      - 3000
+    restart: always
+    networks:
+      - planet-link
+    depends_on:
+      - prometheus
+    volumes:
+      - "./grafana:/var/lib/grafana"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: '4'
+        max-size: '250m'
+
+  node-mon:
+    image: prom/node-exporter
+    container_name: "monitor_node-mon"
+    expose:
+      - 9100
+    restart: always
+    networks:
+      - planet-link
+    logging:
+      driver: "json-file"
+      options:
+        max-file: '4'
+        max-size: '250m'
+
+networks:
+  planet-link:
+    external: true
+
