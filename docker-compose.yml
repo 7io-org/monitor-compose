@@ -42,6 +42,10 @@ services:
     restart: always
     networks:
       - planet-link
+    volumes:
+      - '/:/host:ro,rslave'
+    command:
+      - '--path.rootfs=/host'
     logging:
       driver: "json-file"
       options:
