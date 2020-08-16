@@ -7,7 +7,7 @@ services:
     image: prom/prometheus
     volumes:
       - './prometheus:/etc/prometheus'
-    command: '--config.file=/etc/prometheus/config.yml'
+    command: '--config.file=/etc/prometheus/config.yml --web.external-url=https://prometheus.ledyba.org/'
     expose:
       - 9090
     restart: always
@@ -25,7 +25,7 @@ services:
     image: prom/alertmanager
     volumes:
       - './alertmanager:/etc/alertmanager'
-    command: '--config.file=/etc/alertmanager/config.yml'
+    command: '--config.file=/etc/alertmanager/config.yml --web.external-url=https://alertmanager.ledyba.org/'
     expose:
       - 9093
     restart: always
