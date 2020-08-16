@@ -7,7 +7,7 @@ services:
     image: prom/prometheus
     volumes:
       - './prometheus:/etc/prometheus'
-    command: '--config.file=/etc/prometheus/config.yaml'
+    command: '--config.file=/etc/prometheus/config.yml'
     expose:
       - 9090
     restart: always
@@ -25,7 +25,7 @@ services:
     image: prom/alertmanager
     volumes:
       - './alertmanager:/etc/prometheus'
-    command: '--config.file=/etc/alertmanager/config.yaml'
+    command: '--config.file=/etc/alertmanager/config.yml'
     expose:
       - 9093
     restart: always
