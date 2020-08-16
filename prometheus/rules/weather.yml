@@ -1,0 +1,12 @@
+---
+groups:
+  - name: Weather
+    rules:
+    - alert: HyperHot
+      expr: weather_air_temp{location='Saitama'} >= 303
+      for: 60s
+      labels:
+        severity: warning
+      annotations:
+        summary: It's too hot for humans.
+        description: Take a rest. Don't run arround the Imperial Palace.
