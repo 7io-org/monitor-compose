@@ -28,3 +28,20 @@ scrape_configs:
     static_configs:
     - targets:
       - 'porta_web-mon:9913'
+  - job_name: "WordPress"
+    static_configs:
+      - targets: ["7io.org"]
+    scrape_interval: "5m"
+    metrics_path: "/wp-json/metrics"
+    params:
+      prometheus: ['DAUfZwNRcQWVR8pC76XHLeKaSDaN4ySm']
+      users: ['yes']
+      posts: ['yes']
+      pages: ['yes']
+      autoload: ['yes']
+      transient: ['yes']
+      user_sessions: ['yes']
+      posts_without_content: ['yes']
+      posts_without_title: ['yes']
+      db_size: ['yes']
+    scheme: "https"
