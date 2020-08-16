@@ -24,7 +24,7 @@ services:
     hostname: 'monitor_alertmanager'
     image: prom/alertmanager
     volumes:
-      - './alertmanager:/etc/prometheus'
+      - './alertmanager:/etc/alertmanager'
     command: '--config.file=/etc/alertmanager/config.yml'
     expose:
       - 9093
