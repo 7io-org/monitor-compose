@@ -7,8 +7,8 @@ global:
 
 # Rule files specifies a list of globs. Rules and alerts are read from
 # all matching files.
-rule_files: []
-  #- "/var/app/prometheus/alert.rules"
+rule_files:
+  - '/etc/prometheus/rules/down.yml'
 
 scrape_configs:
   - job_name: 'prometheus'
@@ -31,11 +31,11 @@ scrape_configs:
     static_configs:
     - targets:
       - 'porta_web-mon:9913'
-  - job_name: "WordPress"
+  - job_name: 'wordpress'
     static_configs:
-      - targets: ["7io.org"]
-    scrape_interval: "5m"
-    metrics_path: "/wp-json/metrics"
+      - targets: ['7io.org']
+    scrape_interval: '30s'
+    metrics_path: '/wp-json/metrics'
     params:
       prometheus: ['DAUfZwNRcQWVR8pC76XHLeKaSDaN4ySm']
       users: ['yes']
@@ -47,7 +47,7 @@ scrape_configs:
       posts_without_content: ['yes']
       posts_without_title: ['yes']
       db_size: ['yes']
-    scheme: "https"
+    scheme: 'https'
 
 # Alerting specifies settings related to the Alertmanager.
 alerting:
@@ -59,7 +59,7 @@ alerting:
       - targets:
         - monitor_alertmanager:9093
 
-        # Settings related to the remote write feature.
+# Settings related to the remote write feature.
 #remote_write:
 #  [ - <remote_write> ... ]
 

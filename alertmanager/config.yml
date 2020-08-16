@@ -1,9 +1,16 @@
 ---
 global:
-  slack_api_url: 'dummy'
+  slack_api_url: 'https://dummy.example.com/'
 
 route:
   receiver: 'slack'
+  routes:
+  - match:
+      severity: warning
+    receiver: 'slack'
+  - match:
+      severity: critical
+    receiver: 'slack'
 
 receivers:
   - name: 'slack'
