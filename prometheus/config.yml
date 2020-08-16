@@ -1,3 +1,4 @@
+---
 global:
   scrape_interval:     15s 
   evaluation_interval: 15s 
@@ -49,13 +50,16 @@ scrape_configs:
     scheme: "https"
 
 # Alerting specifies settings related to the Alertmanager.
-#alerting:
+alerting:
 #  alert_relabel_configs:
 #    [ - <relabel_config> ... ]
-#  alertmanagers:
-#    [ - <alertmanager_config> ... ]
+  alertmanagers:
+    - scheme: http
+      static_configs:
+      - targets:
+        - monitor_alertmanager:9093
 
-# Settings related to the remote write feature.
+        # Settings related to the remote write feature.
 #remote_write:
 #  [ - <remote_write> ... ]
 

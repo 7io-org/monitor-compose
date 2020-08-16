@@ -6,7 +6,8 @@ services:
     hostname: 'monitor_prometheus'
     image: prom/prometheus
     volumes:
-      - './prometheus/prometheus.yml:/etc/prometheus/prometheus.yml'
+      - './prometheus:/etc/prometheus'
+    command: '--config.file=/etc/prometheus/config.yaml'
     expose:
       - 9090
     restart: always
@@ -18,6 +19,23 @@ services:
         max-file: '4'
         max-size: '250m'
 
+  alertmanager:
+    container_name: 'monitor_alertmanager'
+    hostname: 'monitor_alertmanager'
+    image: prom/alertmanager
+    volumes:
+      - './alertmanager:/etc/prometheus'
+    command: '--config.file=/etc/alertmanager/config.yaml'
+    expose:
+      - 9093
+    restart: always
+    networks:
+      - planet-link
+    logging:
+      driver: 'json-file'
+      options:
+        max-file: '4'
+        max-size: '250m'
   grafana:
     container_name: 'monitor_grafana'
     hostname: 'monitor_grafana'
