@@ -2,8 +2,10 @@ global:
   scrape_interval:     15s 
   evaluation_interval: 15s 
   external_labels:
-      monitor: 'codelab-monitor'
+      monitor: 'ledyba-monitor'
 
+# Rule files specifies a list of globs. Rules and alerts are read from
+# all matching files.
 rule_files: []
   #- "/var/app/prometheus/alert.rules"
 
@@ -45,3 +47,18 @@ scrape_configs:
       posts_without_title: ['yes']
       db_size: ['yes']
     scheme: "https"
+
+# Alerting specifies settings related to the Alertmanager.
+#alerting:
+#  alert_relabel_configs:
+#    [ - <relabel_config> ... ]
+#  alertmanagers:
+#    [ - <alertmanager_config> ... ]
+
+# Settings related to the remote write feature.
+#remote_write:
+#  [ - <remote_write> ... ]
+
+# Settings related to the remote read feature.
+#remote_read:
+#  [ - <remote_read> ... ]
