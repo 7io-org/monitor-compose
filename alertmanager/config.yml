@@ -16,4 +16,7 @@ receivers:
   - name: 'slack'
     slack_configs:
       - api_url: 'https://hooks.slack.com/services/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'
-      - channel: '#alerts'
+        channel: '#alerts'
+        send_resolved: true
+        username: 'Earth'
+        text: "<!channel> \ndescription: {{ .CommonAnnotations.description }}\nsummary: {{ .CommonAnnotations.summary }}"
