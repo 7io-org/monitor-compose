@@ -1,6 +1,6 @@
 ---
 global:
-  slack_api_url: 'https://dummy.example.com/'
+  slack_api_url: 'https://hooks.slack.com/services/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'
 
 route:
   receiver: 'slack'
@@ -15,9 +15,26 @@ route:
 receivers:
   - name: 'slack'
     slack_configs:
-      - api_url: 'https://hooks.slack.com/services/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'
+      - username: 'Earth'
         channel: '#alerts'
         send_resolved: true
-        username: 'Earth'
-        text: "<!channel> \ndescription: {{ .CommonAnnotations.description }}\nsummary: {{ .CommonAnnotations.summary }}"
+        # https://www.weave.works/blog/labels-in-prometheus-alerts-think-twice-before-using-them
+        title: |-
+          {{- if .CommonAnnotations.summary -}}
+              {{- .CommonAnnotations.summary -}}
+          {{- else -}}
+              {{- with index .Alerts 0 -}}
+                  {{- .Annotations.summary -}}
+              {{- end -}}
+          {{- end -}}
+        text: |-
+          {{- if .CommonAnnotations.description -}}
+              {{- .CommonAnnotations.description -}}
+          {{- else -}}
+              {{- range $i, $alert := .Alerts }}
+                  {{- "\n" -}} {{- .Annotations.description -}}
+              {{- end -}}
+          {{- end -}}
         icon_emoji: ':earth_asia:'
+        icon_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Emojione_1F30F.svg/240px-Emojione_1F30F.svg.png'
+
