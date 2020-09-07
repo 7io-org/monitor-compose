@@ -6,7 +6,7 @@ PROJ_PATH=$(readlink -f $(cd $(dirname $(readlink -f $0)) && pwd))
 cd ${PROJ_PATH}/..
 
 sudo bash -exu <<EOF
-docker-compose down
+docker-compose stop
 tar -czvf "${BACKUP_FILENAME}" ./data
 chown $(id -g):$(id -u) "${BACKUP_FILENAME}"
 docker-compose up -d
