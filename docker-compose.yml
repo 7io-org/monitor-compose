@@ -92,8 +92,6 @@ services:
       - crate-link
     depends_on:
       - crate-01
-      - crate-02
-      - crate-03
     logging:
       driver: 'json-file'
       options:
@@ -108,73 +106,13 @@ services:
       - ./data/crate/01:/data
     command:
       - 'crate'
-      - '-Ccluster.name=crate-monitor-cluster'
-      - '-Cnode.name=crate-01'
-      - '-Cnode.data=true'
       - '-Cnetwork.host=_site_'
-      - '-Cdiscovery.seed_hosts=crate-02,crate-03'
-      - '-Ccluster.initial_master_nodes=crate-01,crate-02,crate-03'
-      - '-Cgateway.expected_nodes=3'
-      - '-Cgateway.recover_after_nodes=2'
+      - '-Cdiscovery.type=single-node'
     networks:
       - crate-link
     restart: always
     environment:
-      - CRATE_HEAP_SIZE=256m
-    logging:
-      driver: 'json-file'
-      options:
-        max-file: '4'
-        max-size: '250m'
-
-  crate-02:
-    image: crate:latest
-    ports:
-      - 4200
-    volumes:
-      - ./data/crate/02:/data
-    command:
-      - 'crate'
-      - '-Ccluster.name=crate-monitor-cluster'
-      - '-Cnode.name=crate-02'
-      - '-Cnode.data=true'
-      - '-Cnetwork.host=_site_'
-      - '-Cdiscovery.seed_hosts=crate-01,crate-03'
-      - '-Ccluster.initial_master_nodes=cratedb01,crate-02,crate-03'
-      - '-Cgateway.expected_nodes=3'
-      - '-Cgateway.recover_after_nodes=2'
-    networks:
-      - crate-link
-    restart: always
-    environment:
-      - CRATE_HEAP_SIZE=256m
-    logging:
-      driver: 'json-file'
-      options:
-        max-file: '4'
-        max-size: '250m'
-
-  crate-03:
-    image: crate:latest
-    ports:
-      - 4200
-    volumes:
-      - ./data/crate/03:/data
-    command:
-      - 'crate'
-      - '-Ccluster.name=crate-monitor-cluster'
-      - '-Cnode.name=crate-03'
-      - '-Cnode.data=true'
-      - '-Cnetwork.host=_site_'
-      - '-Cdiscovery.seed_hosts=crate-01,crate-02'
-      - '-Ccluster.initial_master_nodes=cratedb01,crate-02,crate-03'
-      - '-Cgateway.expected_nodes=3'
-      - '-Cgateway.recover_after_nodes=2'
-    networks:
-      - crate-link
-    restart: always
-    environment:
-      - CRATE_HEAP_SIZE=256m
+      - CRATE_HEAP_SIZE=1g
     logging:
       driver: 'json-file'
       options:
