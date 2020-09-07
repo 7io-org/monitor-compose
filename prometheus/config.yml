@@ -24,6 +24,11 @@ scrape_configs:
     static_configs:
       - targets:
         - 'pleroma_postgres-mon:9187'
+  - job_name: 'pleroma'
+    metrics_path: '/api/pleroma/app_metrics'
+    static_configs:
+      - targets:
+        - 'pleroma_web:4000'
   - job_name: 'nodoca'
     static_configs:
       - targets:
