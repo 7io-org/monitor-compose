@@ -3,7 +3,7 @@ global:
   slack_api_url: 'https://hooks.slack.com/services/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'
 
 route:
-  receiver: 'slack'
+  receiver: 'slack-earth'
 #  routes:
 #  - match:
 #      severity: warning
@@ -33,6 +33,29 @@ receivers:
           {{- else -}}
               {{- range $i, $alert := .Alerts }}
                   {{- "\n" -}} {{- .Annotations.description -}}
+              {{- end -}}
+          {{- end -}}
+        icon_emoji: ':earth_asia:'
+        icon_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Emojione_1F30F.svg/240px-Emojione_1F30F.svg.png'
+  - name: 'slack-earth'
+    slack_configs:
+      - username: 'Earth'
+        channel: '#alerts'
+        send_resolved: true
+        title: |-
+          {{- if .CommonAnnotations.summary -}}
+              {{- .CommonAnnotations.summary -}}
+          {{- else -}}
+              {{- with index .Alerts 0 -}}
+                  {{- .Annotations.summary -}}
+              {{- end -}}
+          {{- end -}}
+        text: |-
+          {{- if .CommonAnnotations.description -}}
+              {{- .CommonAnnotations.description -}}
+          {{- else -}}
+              {{- with index .Alerts 0 -}}
+                  {{- .Annotations.description -}}
               {{- end -}}
           {{- end -}}
         icon_emoji: ':earth_asia:'
