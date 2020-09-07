@@ -71,10 +71,13 @@ alerting:
       - targets:
         - monitor_alertmanager:9093
 
-# Settings related to the remote write feature.
-#remote_write:
-#  [ - <remote_write> ... ]
+remote_write:
+  - url: http://monitor_crate-adapter:9268/write
+    queue_config:
+      capacity: 1000000
+      batch_send_deadline: 10s
+      max_samples_per_send: 1000
+      max_shards: 3
 
-# Settings related to the remote read feature.
-#remote_read:
-#  [ - <remote_read> ... ]
+remote_read:
+  - url: http://monitor_crate-adapter:9268/read
