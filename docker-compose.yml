@@ -119,7 +119,7 @@ services:
       - crate-link
     restart: always
     environment:
-      - CRATE_HEAP_SIZE=128m
+      - CRATE_HEAP_SIZE=192m
     logging:
       driver: 'json-file'
       options:
@@ -146,7 +146,7 @@ services:
       - crate-link
     restart: always
     environment:
-      - CRATE_HEAP_SIZE=128m
+      - CRATE_HEAP_SIZE=192m
     logging:
       driver: 'json-file'
       options:
@@ -173,7 +173,7 @@ services:
       - crate-link
     restart: always
     environment:
-      - CRATE_HEAP_SIZE=128m
+      - CRATE_HEAP_SIZE=192m
     logging:
       driver: 'json-file'
       options:
