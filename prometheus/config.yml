@@ -1,7 +1,7 @@
 ---
 global:
-  scrape_interval:     15s 
-  evaluation_interval: 15s 
+  scrape_interval:     '15s'
+  evaluation_interval: '15s'
   external_labels:
       monitor: 'ledyba-monitor'
 
@@ -66,18 +66,12 @@ alerting:
 #  alert_relabel_configs:
 #    [ - <relabel_config> ... ]
   alertmanagers:
-    - scheme: http
+    - scheme: 'http'
       static_configs:
       - targets:
-        - monitor_alertmanager:9093
+        - 'monitor_alertmanager:9093'
 
 remote_write:
-  - url: http://monitor_crate-adapter:9268/write
-    queue_config:
-      capacity: 1000000
-      batch_send_deadline: 10s
-      max_samples_per_send: 1000
-      max_shards: 3
-
+  - url: 'http://prometheus_sql_adapter:8080/write'
 remote_read:
-  - url: http://monitor_crate-adapter:9268/read
+  - url: 'http://prometheus_sql_adapter:8080/read'
