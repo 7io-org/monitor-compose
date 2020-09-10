@@ -75,54 +75,7 @@ services:
       options:
         max-file: '4'
         max-size: '250m'
-
-# CreteDB cluster
-  crate-adapter:
-    container_name: 'monitor_crate-adapter'
-    hostname: 'monitor_crate-adapter'
-    image: crate/crate_adapter
-    ports:
-      - 9268
-    volumes:
-      - './crate:/config'
-    command: '--config.file=/config/adapter.yaml'
-    restart: always
-    networks:
-      - planet-link
-      - crate-link
-    depends_on:
-      - crate-01
-    logging:
-      driver: 'json-file'
-      options:
-        max-file: '4'
-        max-size: '250m'
-
-  crate-01:
-    image: crate:latest
-    ports:
-      - 4200
-    volumes:
-      - ./data/crate/01:/data
-    command:
-      - 'crate'
-      - '-Cnetwork.host=_site_'
-      - '-Cdiscovery.type=single-node'
-    networks:
-      - crate-link
-    restart: always
-    environment:
-      - CRATE_HEAP_SIZE=1g
-    logging:
-      driver: 'json-file'
-      options:
-        max-file: '4'
-        max-size: '250m'
-
 #
 networks:
   planet-link:
     external: true
-  crate-link:
-    external: false
-
