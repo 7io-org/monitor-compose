@@ -57,9 +57,10 @@ services:
         max-file: '4'
         max-size: '250m'
 
-  node-mon:
-    container_name: 'monitor_node-mon'
-    hostname: 'monitor_node-mon'
+## Exporters
+  node-exporter:
+    container_name: 'monitor_node-exporter'
+    hostname: 'monitor_node-exporter'
     image: prom/node-exporter
     expose:
       - 9100
@@ -70,6 +71,34 @@ services:
       - '/:/host:ro,rslave'
     command:
       - '--path.rootfs=/host'
+    logging:
+      driver: 'json-file'
+      options:
+        max-file: '4'
+        max-size: '250m'
+  domain-exporter:
+    container_name: 'monitor_domain-exporter'
+    hostname: 'monitor_domain-exporter'
+    image: caarlos0/domain_exporter
+    expose:
+      - 9222
+    restart: always
+    networks:
+      - planet-link
+    logging:
+      driver: 'json-file'
+      options:
+        max-file: '4'
+        max-size: '250m'
+  ssl-exporter:
+    container_name: 'monitor_ssl-exporter'
+    hostname: 'monitor_ssl-exporter'
+    image: ribbybibby/ssl-exporter
+    expose:
+      - 9219
+    restart: always
+    networks:
+      - planet-link
     logging:
       driver: 'json-file'
       options:
