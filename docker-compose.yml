@@ -86,12 +86,11 @@ services:
     restart: always
     networks:
       - planet-link
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: db
     volumes:
       - ./data/timescale:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
     logging:
       driver: 'json-file'
       options:
@@ -105,7 +104,12 @@ services:
     depends_on:
       - timescale
     environment:
-      DATA_SOURCE_NAME: 'postgresql://root:root@monitor_timescale:5432/?sslmode=disable'
+      TS_PROM_LOG_LEVEL: debug
+      TS_PROM_DB_CONNECT_RETRIES: 10
+      TS_PROM_DB_HOST: timescale
+      TS_PROM_DB_PASSWORD: postgres
+      TS_PROM_DB_NAME: postgres
+      TS_PROM_WEB_TELEMETRY_PATH: /metrics-text
     networks:
       - planet-link
     logging:
