@@ -27,7 +27,7 @@ scrape_configs:
   - job_name: 'lunar-mysql'
     static_configs:
       - targets:
-        - 'lunar_mysql-mon:9104'
+        - 'lunar_mysql-exporter:9104'
   - job_name: 'wordpress'
     static_configs:
       - targets: ['7io.org']
@@ -48,7 +48,7 @@ scrape_configs:
   - job_name: 'pleroma-postgres'
     static_configs:
       - targets:
-        - 'pleroma_postgres-mon:9187'
+        - 'pleroma_postgres-exporter:9187'
   - job_name: 'pleroma'
     metrics_path: '/api/pleroma/app_metrics'
     static_configs:
@@ -57,7 +57,7 @@ scrape_configs:
   - job_name: 'nginx'
     static_configs:
       - targets:
-        - 'porta_web-mon:9913'
+        - 'porta_nginx-exporter:9913'
   - job_name: 'weather_exporter'
     scrape_interval: '60s'
     metrics_path: '/'
