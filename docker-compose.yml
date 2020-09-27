@@ -61,22 +61,6 @@ services:
         max-size: '250m'
 
 ## Storage
-  promscale:
-    container_name: 'monitor_promscale'
-    hostname: 'monitor_promscale'
-    image: 'timescale/promscale'
-    expose:
-      - 9201
-    restart: always
-    depends_on:
-      - timescale
-    networks:
-      - planet-link
-    logging:
-      driver: 'json-file'
-      options:
-        max-file: '4'
-        max-size: '250m'
   timescale:
     container_name: 'monitor_timescale'
     hostname: 'monitor_timescale'
@@ -103,6 +87,25 @@ services:
     restart: always
     depends_on:
       - timescale
+    networks:
+      - planet-link
+    logging:
+      driver: 'json-file'
+      options:
+        max-file: '4'
+        max-size: '250m'
+  promscale:
+    container_name: 'monitor_promscale'
+    hostname: 'monitor_promscale'
+    image: 'timescale/promscale'
+    command: '-db-ssl-mode=disable'
+    expose:
+      - 9201
+    restart: always
+    depends_on:
+      - timescale
+    networks:
+      - planet-link
     environment:
       TS_PROM_LOG_LEVEL: debug
       TS_PROM_DB_CONNECT_RETRIES: 10
@@ -110,8 +113,6 @@ services:
       TS_PROM_DB_PASSWORD: postgres
       TS_PROM_DB_NAME: postgres
       TS_PROM_WEB_TELEMETRY_PATH: /metrics-text
-    networks:
-      - planet-link
     logging:
       driver: 'json-file'
       options:
