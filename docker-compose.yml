@@ -12,6 +12,8 @@ services:
     expose:
       - 9090
     restart: always
+    depends_on:
+      - promscale
     networks:
       - planet-link
     logging:
@@ -49,6 +51,7 @@ services:
       - planet-link
     depends_on:
       - prometheus
+      - promscale
     volumes:
       - './data/grafana:/var/lib/grafana'
     logging:
@@ -57,6 +60,59 @@ services:
         max-file: '4'
         max-size: '250m'
 
+## Storage
+  promscale:
+    container_name: 'monitor_promscale'
+    hostname: 'monitor_promscale'
+    image: 'timescale/promscale'
+    expose:
+      - 9201
+    restart: always
+    depends_on:
+      - timescale
+    networks:
+      - planet-link
+    logging:
+      driver: 'json-file'
+      options:
+        max-file: '4'
+        max-size: '250m'
+  timescale:
+    container_name: 'monitor_timescale'
+    hostname: 'monitor_timescale'
+    image: 'timescaledev/promscale-extension:latest-pg12'
+    expose:
+      - 5432
+    restart: always
+    networks:
+      - planet-link
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: db
+    volumes:
+      - ./data/timescale:/var/lib/postgresql/data
+    logging:
+      driver: 'json-file'
+      options:
+        max-file: '4'
+        max-size: '250m'
+  timescale-exporter:
+    image: wrouesnel/postgres_exporter:latest
+    container_name: monitor_timescale-exporter
+    hostname: monitor_timescale-exporter
+    restart: always
+    depends_on:
+      - timescale
+    environment:
+      DATA_SOURCE_NAME: 'postgresql://root:root@monitor_timescale:5432/?sslmode=disable'
+    networks:
+      - planet-link
+    logging:
+      driver: 'json-file'
+      options:
+        max-file: '4'
+        max-size: '250m'
 ## Exporters
   node-exporter:
     container_name: 'monitor_node-exporter'

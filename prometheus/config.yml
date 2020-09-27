@@ -20,6 +20,10 @@ scrape_configs:
     static_configs:
       - targets: 
         - 'localhost:9090'
+  - job_name: 'monitor-timescale'
+    static_configs:
+      - targets:
+        - 'monitor_timescale-exporter:9187'
   - job_name: 'lunar-mysql'
     static_configs:
       - targets:
@@ -117,6 +121,6 @@ alerting:
         - 'monitor_alertmanager:9093'
 
 remote_write:
-  - url: 'http://prometheus_sql_adapter:8080/write'
+  - url: 'http://monitor_timescale-exporter:9201/write'
 remote_read:
-  - url: 'http://prometheus_sql_adapter:8080/read'
+  - url: 'http://monitor_timescale-exporter:9201/read'
