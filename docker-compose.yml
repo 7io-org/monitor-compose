@@ -89,6 +89,8 @@ services:
       - timescale
     networks:
       - planet-link
+    environment:
+      - 'DATA_SOURCE_NAME=postgresql://postgres:postgres@timescale:5432/postgres?sslmode=disable'
     logging:
       driver: 'json-file'
       options:
