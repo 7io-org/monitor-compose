@@ -12,8 +12,7 @@ services:
     expose:
       - 9090
     restart: always
-    depends_on:
-      - promscale
+    depends_on: []
     networks:
       - planet-link
     logging:
@@ -61,65 +60,6 @@ services:
         max-size: '250m'
 
 ## Storage
-  timescale:
-    container_name: 'monitor_timescale'
-    hostname: 'monitor_timescale'
-    image: 'timescaledev/promscale-extension:latest-pg12'
-    expose:
-      - 5432
-    restart: always
-    networks:
-      - planet-link
-    volumes:
-      - ./data/timescale:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-    logging:
-      driver: 'json-file'
-      options:
-        max-file: '4'
-        max-size: '250m'
-  timescale-exporter:
-    image: wrouesnel/postgres_exporter:latest
-    container_name: monitor_timescale-exporter
-    hostname: monitor_timescale-exporter
-    restart: always
-    depends_on:
-      - timescale
-    networks:
-      - planet-link
-    environment:
-      - 'DATA_SOURCE_NAME=postgresql://postgres:postgres@timescale:5432/postgres?sslmode=disable'
-    logging:
-      driver: 'json-file'
-      options:
-        max-file: '4'
-        max-size: '250m'
-  promscale:
-    container_name: 'monitor_promscale'
-    hostname: 'monitor_promscale'
-    image: 'timescale/promscale'
-    command: '-db-ssl-mode=disable'
-    expose:
-      - 9201
-    restart: always
-    depends_on:
-      - timescale
-    networks:
-      - planet-link
-    environment:
-      TS_PROM_LOG_LEVEL: debug
-      TS_PROM_DB_CONNECT_RETRIES: 10
-      TS_PROM_DB_HOST: timescale
-      TS_PROM_DB_PASSWORD: postgres
-      TS_PROM_DB_NAME: postgres
-      TS_PROM_WEB_TELEMETRY_PATH: /metrics-text
-    logging:
-      driver: 'json-file'
-      options:
-        max-file: '4'
-        max-size: '250m'
 ## Exporters
   node-exporter:
     container_name: 'monitor_node-exporter'

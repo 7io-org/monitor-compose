@@ -120,7 +120,7 @@ alerting:
       - targets:
         - 'monitor_alertmanager:9093'
 
-remote_write:
-  - url: 'http://monitor_timescale-exporter:9201/write'
-remote_read:
-  - url: 'http://monitor_timescale-exporter:9201/read'
+#remote_write:
+#  - url: 'http://monitor_promscale:9201/write'
+#remote_read:
+#  - url: 'http://monitor_promscale:9201/read'
