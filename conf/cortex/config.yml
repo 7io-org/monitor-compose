@@ -40,16 +40,15 @@ ingester:
       kvstore:
         store: inmemory
       replication_factor: 1
+  walconfig:
+    # Enable writing of ingested data into WAL.
+    # CLI flag: -ingester.wal-enabled
+    wal_enabled: true
+    wal_dir: '/var/lib/cortex/wal'
 
-walconfig:
-  # Enable writing of ingested data into WAL.
-  # CLI flag: -ingester.wal-enabled
-  wal_enabled: true
-  wal_dir: '/var/lib/cortex/wal'
-
-  storage:
-  # The storage engine to use. Use "blocks" for the blocks storage.
-  # CLI flag: -store.engine
+storage:
+# The storage engine to use. Use "blocks" for the blocks storage.
+# CLI flag: -store.engine
   engine: 'blocks'
   filesystem:
     directory: '/var/lib/cortex/storage'
