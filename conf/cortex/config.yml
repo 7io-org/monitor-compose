@@ -62,6 +62,8 @@ blocks_storage:
     dir: '/var/lib/cortex/blocks-storage'
   bucket_store:
     sync_dir: '/var/lib/cortex/tsdb-sync'
+  tsdb:
+    dir: '/var/lib/cortex/tsdb'
 
 compactor:
   data_dir: /var/lib/cortex/compactor
@@ -79,3 +81,4 @@ ruler:
     type: local
     local:
       directory: /var/lib/cortex/rules
+  rule_path: /var/lib/cortex/rules-tmp
