@@ -98,6 +98,7 @@ services:
       options:
         max-file: '4'
         max-size: '250m'
+
   domain-exporter:
     container_name: 'monitor_domain-exporter'
     hostname: 'monitor_domain-exporter'
@@ -112,6 +113,7 @@ services:
       options:
         max-file: '4'
         max-size: '250m'
+
   ssl-exporter:
     container_name: 'monitor_ssl-exporter'
     hostname: 'monitor_ssl-exporter'
