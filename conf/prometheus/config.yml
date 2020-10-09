@@ -116,7 +116,17 @@ alerting:
       - targets:
         - 'alertmanager:9093'
 
+#remote_write:
+#  - url: 'http://monitor_cortex:9009/api/v1/push'
+#remote_read:
+#  - url: 'http://monitor_cortex:9009/api/v1/read'
+
+# https://github.com/VictoriaMetrics/VictoriaMetrics/wiki/Single-server-VictoriaMetrics#grafana-setup
 remote_write:
-  - url: 'http://monitor_cortex:9009/api/v1/push'
-remote_read:
-  - url: 'http://monitor_cortex:9009/api/v1/read'
+  - url: 'http://monitor_victoria-metrics:8248/api/v1/write'
+    queue_config:
+      max_samples_per_send: 10000
+      capacity: 20000
+      max_shards: 30
+# remote_read is not supported in victoria-metrics
+#   See: https://github.com/VictoriaMetrics/VictoriaMetrics/issues/129#issuecomment-559054357

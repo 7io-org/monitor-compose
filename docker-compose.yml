@@ -59,20 +59,44 @@ services:
         max-size: '250m'
 
 ## Storage
-  cortex:
-    container_name: 'monitor_cortex'
-    hostname: 'monitor_cortex'
-    image: 'cortexproject/cortex:master-d10d175d1'
-    command: --config.file=/etc/cortex/config.yml
+#  cortex:
+#    container_name: 'monitor_cortex'
+#    hostname: 'monitor_cortex'
+#    image: 'cortexproject/cortex:master-d10d175d1'
+#    command: --config.file=/etc/cortex/config.yml
+#    expose:
+#      - '9009'
+#      - '9095'
+#    restart: always
+#    networks:
+#      - planet-link
+#    volumes:
+#      - './conf/cortex:/etc/cortex'
+#      - './data/cortex:/var/lib/cortex'
+#    logging:
+#      driver: 'json-file'
+#      options:
+#        max-file: '4'
+#        max-size: '250m'
+
+  virtoria-metrics:
+    container_name: 'monitor_victoria-metrics'
+    hostname: 'monitor_victoria-metrics'
+    image: 'victoriametrics/victoria-metrics:latest'
+    command: --config.file=/etc/victoria-metrics/config.yml
     expose:
-      - '9009'
-      - '9095'
+      - '8248'
     restart: always
     networks:
       - planet-link
     volumes:
-      - './conf/cortex:/etc/cortex'
-      - './data/cortex:/var/lib/cortex'
+      - './conf/victoria-metrics:/etc/victoria-metrics'
+      - './conf/prometheus:/etc/prometheus'
+      - './data/victoria-metrics:/var/lib/victoria-metrics'
+    command:
+      - '--enableTCP6'
+      - '--storageDataPath=/var/lib/victoria-metrics'
+      - '--httpListenAddr=:8248'
     logging:
       driver: 'json-file'
       options:
