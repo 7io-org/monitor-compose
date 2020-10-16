@@ -66,10 +66,17 @@ scrape_configs:
       app-id: ['6f2bbbdbb606f96a81a30961e8cc0d61']
     static_configs:
       - targets:
-        - 'Tokyo,JP'
-        - 'Saitama,JP'
-        - 'Kyoto,JP'
-        - 'Osaka,JP'
+          - 'Sapporo,JP'
+          - 'Aomori,JP'
+          - 'Tochigi,JP'
+          - 'Saitama,JP'
+          - 'Tokyo,JP'
+          - 'Kyoto,JP'
+          - 'Osaka,JP'
+          - 'Wakayama,JP'
+          - 'Matsue,JP'
+          - 'Fukuoka,JP'
+          - 'Naha,JP'
   - job_name: 'ssl'
     metrics_path: /probe
     relabel_configs:
