@@ -133,6 +133,22 @@ services:
       options:
         max-file: '4'
         max-size: '250m'
+
+  weather_exporter:
+    container_name: 'monitor_weather_exporter'
+    hostname: 'monitor_weather_exporter'
+    image: ghcr.io/ledyba/weather_exporter:latest
+    restart: always
+    command: "web --listen '0.0.0.0:8080'"
+    expose:
+      - '8080'
+    networks:
+      - planet-link
+    logging:
+      driver: "json-file"
+      options:
+        max-file: '4'
+        max-size: '250m'
 #
 networks:
   planet-link:
